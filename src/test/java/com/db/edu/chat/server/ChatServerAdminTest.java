@@ -1,14 +1,14 @@
 package com.db.edu.chat.server;
 
 
-import static com.db.edu.chat.server.TestUtils.sleep;
+import com.db.edu.chat.Configuration;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
 
-import org.junit.Ignore;
-import org.junit.Test;
+import static com.db.edu.chat.server.TestUtils.sleep;
 
 
 public class ChatServerAdminTest {
@@ -21,7 +21,7 @@ public class ChatServerAdminTest {
 		sleep(300);
 		
 		try {
-			new Socket(Server.HOST, Server.PORT);
+			new Socket(Configuration.HOST, Configuration.PORT);
 		} finally {
 			testServer.stop();			
 		}
@@ -34,7 +34,7 @@ public class ChatServerAdminTest {
 		sleep(300);
 		testServer.stop();
 
-		Socket testSocket = new Socket(Server.HOST, Server.PORT);
+		Socket testSocket = new Socket(Configuration.HOST, Configuration.PORT);
 		testSocket.close();
 	}
 }

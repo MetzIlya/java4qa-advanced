@@ -1,5 +1,8 @@
 package com.db.edu.chat.server;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -7,10 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.Iterator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ClientConnectionHandler implements Runnable {
 	private static final Logger logger = LoggerFactory.getLogger(ClientConnectionHandler.class);
@@ -22,7 +21,6 @@ public class ClientConnectionHandler implements Runnable {
 		this.inSocket = clientSocket;
 		this.clientsSockets = clientsSockets;
 	}
-
 	
 	public void run() {
 		while(true) {
@@ -38,10 +36,12 @@ public class ClientConnectionHandler implements Runnable {
 
 				for (Socket outSocket : clientsSockets) {
 					try {
+						// TODO: Can use single if
 						if (outSocket.isClosed()) continue;
 						if (!outSocket.isBound()) continue;
 						if (!outSocket.isConnected()) continue;
 						if (outSocket == this.inSocket) continue;
+						// TODO: Doesn't update list when client is unreachable
 						logger.info("Writing message " + message + " to socket " + outSocket);
 
 						BufferedWriter socketWriter = new BufferedWriter(new OutputStreamWriter(outSocket.getOutputStream()));

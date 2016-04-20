@@ -1,13 +1,18 @@
 package com.db.edu.chat.server;
 
-import static org.junit.Assume.assumeNotNull;
-
+import com.db.edu.chat.Configuration;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.Socket;
+
+import static org.junit.Assume.assumeNotNull;
 
 public class JUnitLoadTest {
     private static final Logger logger = LoggerFactory.getLogger(JUnitLoadTest.class);
@@ -21,7 +26,7 @@ public class JUnitLoadTest {
 
         Socket readerClientSocket = null;
         try {
-            readerClientSocket = new Socket(Server.HOST, Server.PORT);
+            readerClientSocket = new Socket(Configuration.HOST, Configuration.PORT);
         } catch (IOException e) {
             logger.error("Can't connect to server: ", e);
         }
@@ -48,7 +53,7 @@ public class JUnitLoadTest {
         });
         readerClient.start();
 
-        final Socket writerClientSocket = new Socket(Server.HOST, Server.PORT);
+        final Socket writerClientSocket = new Socket(Configuration.HOST, Configuration.PORT);
         final BufferedWriter writerClientSocketWriter = new BufferedWriter(new OutputStreamWriter(writerClientSocket.getOutputStream()));
         socketWrite(writerClientSocketWriter, sentMessage);
 
@@ -56,7 +61,7 @@ public class JUnitLoadTest {
         if(gotException != null) throw gotException;
     }
 
-
+    // TODO: sleep should be moved to test utils
     private static void sleep(int seconds) {
         try { Thread.sleep(1000*seconds); } catch (InterruptedException e) { }
     }

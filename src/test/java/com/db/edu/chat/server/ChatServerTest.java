@@ -1,9 +1,10 @@
 package com.db.edu.chat.server;
 
 
-import static org.junit.Assert.assertEquals;
-
-import static com.db.edu.chat.server.TestUtils.sleep;
+import com.db.edu.chat.Configuration;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,10 +13,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static com.db.edu.chat.server.TestUtils.sleep;
+import static org.junit.Assert.assertEquals;
 
 
 public class ChatServerTest {
@@ -30,15 +29,15 @@ public class ChatServerTest {
 		testServer.start();
 		sleep(500);
 		
-		socket1 = new Socket(Server.HOST, Server.PORT);
+		socket1 = new Socket(Configuration.HOST, Configuration.PORT);
 		socketWriter1 = new BufferedWriter(new OutputStreamWriter(socket1.getOutputStream()));
 		socketReader1 = new BufferedReader(new InputStreamReader(socket1.getInputStream()));
 		
-		socket2 = new Socket(Server.HOST, Server.PORT);
+		socket2 = new Socket(Configuration.HOST, Configuration.PORT);
 		socketWriter2 = new BufferedWriter(new OutputStreamWriter(socket2.getOutputStream()));
 		socketReader2 = new BufferedReader(new InputStreamReader(socket2.getInputStream()));
 		
-		socket3 = new Socket(Server.HOST, Server.PORT);
+		socket3 = new Socket(Configuration.HOST, Configuration.PORT);
 		socketWriter3 = new BufferedWriter(new OutputStreamWriter(socket3.getOutputStream()));
 		socketReader3 = new BufferedReader(new InputStreamReader(socket3.getInputStream()));
 		

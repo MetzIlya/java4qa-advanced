@@ -1,14 +1,15 @@
 package com.db.edu.chat.server;
 
+import com.db.edu.chat.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 public class ChatServerLoadApp {
@@ -17,7 +18,7 @@ public class ChatServerLoadApp {
 	public static void main(String... args) throws IOException {
 		while(true) {
 			ChatServerLoadApp.sleep(1);
-            final Socket socket = new Socket(Server.HOST, Server.PORT);
+            final Socket socket = new Socket(Configuration.HOST, Configuration.PORT);
 
 			new Thread() {
 				@Override
@@ -43,6 +44,7 @@ public class ChatServerLoadApp {
 					try {
 						BufferedReader socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 						while(true) {
+							// TODO: Print to console quite heavy operation, will affect test results
 							System.out.println( ">>>>" + socketReader.readLine() );
 						}
 					} catch (IOException e) {
@@ -58,7 +60,9 @@ public class ChatServerLoadApp {
 		socketWriter.newLine();
 		socketWriter.flush();
 	}
-	
+
+	// TODO: Rename sleep to sleepSeconds,
+	// make more common and move to TestUtils
 	private static void sleep(int seconds) {
 		try { Thread.sleep(1000*seconds); } catch (InterruptedException e) { }
 	}
