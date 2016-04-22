@@ -22,11 +22,12 @@ public class Listener implements Runnable {
             try {
                 String message = reader.readLine();
                 logger.debug("Message received - {}",message);
-                if(message == null) continue;
+                if(message == null) break;
 
                 processor.processMessage(message);
             } catch (IOException e) {
                 logger.error("",e);
+                break;
             }
         }
 

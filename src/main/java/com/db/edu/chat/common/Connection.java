@@ -45,7 +45,9 @@ public class Connection {
         }
     }
     public void write(String message){
-
+        if (ownSocket.isClosed()) return;
+        if (!ownSocket.isBound()) return;
+        if (!ownSocket.isConnected()) return;
         logger.debug("Writing message {} to socket {}", message,ownSocket.getInetAddress()+":"+ownSocket.getPort());
         try {
             writer.write(message);
