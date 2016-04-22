@@ -1,10 +1,14 @@
 package com.db.edu.chat.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class WriterProcessor implements MessageProcessor {
     BufferedWriter writer;
+    private static final Logger logger = LoggerFactory.getLogger(SocketWriterProcessor.class);
 
     public WriterProcessor(BufferedWriter writer) {
         this.writer = writer;
@@ -17,7 +21,7 @@ public class WriterProcessor implements MessageProcessor {
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("IO Exception",e);
         }
 
     }

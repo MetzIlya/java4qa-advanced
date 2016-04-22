@@ -41,7 +41,7 @@ public class Server {
                     clientListener.setDaemon(true);
                     clientListener.start();
                 } catch (SocketException e) {
-                    logger.debug("Intentionally closed socket: time to stop");
+                    logger.debug("Intentionally closed socket: time to stop",e);
                     break;
                 } catch (IOException e) {
                     logger.error("Network error", e);

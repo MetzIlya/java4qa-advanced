@@ -33,14 +33,14 @@ public class Connection {
             writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Socket opening exception ",e);
         }
     }
     public String read(){
         try {
             return reader.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Read exception ",e);
             return null;
         }
     }
@@ -54,7 +54,7 @@ public class Connection {
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Write exception ",e);
         }
 
     }
