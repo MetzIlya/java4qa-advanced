@@ -26,7 +26,7 @@ public class JUnitLoadTest {
         server = new Server();
         server.start();
 
-        sleep(300);
+//        sleep(300);
     }
 
     @Test(timeout = 1000)
