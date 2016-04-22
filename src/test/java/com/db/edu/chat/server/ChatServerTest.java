@@ -68,7 +68,7 @@ public class ChatServerTest {
 		socketWrite(socketWriter1, "test");
 		assertEquals("test", socketReader2.readLine());
 	}
-	
+
 	@Ignore
 	@Test(timeout=5000)
 	public void shouldEchoMessageToSecondAndThirdClient() throws IOException, ServerError {
