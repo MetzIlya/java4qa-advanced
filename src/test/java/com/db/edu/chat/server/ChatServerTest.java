@@ -4,7 +4,6 @@ package com.db.edu.chat.server;
 import com.db.edu.chat.Configuration;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -69,7 +68,6 @@ public class ChatServerTest {
 		assertEquals("test", socketReader2.readLine());
 	}
 
-	@Ignore
 	@Test(timeout=5000)
 	public void shouldEchoMessageToSecondAndThirdClient() throws IOException, ServerError {
 		socketWrite(socketWriter1, "test");
