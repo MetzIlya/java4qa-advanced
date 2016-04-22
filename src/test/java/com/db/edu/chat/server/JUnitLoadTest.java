@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import static com.db.edu.chat.server.TestUtils.sleep;
 import static org.junit.Assume.assumeNotNull;
 
 public class JUnitLoadTest {
@@ -26,10 +27,10 @@ public class JUnitLoadTest {
         server = new Server();
         server.start();
 
-//        sleep(300);
+        sleep(300);
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 2000)
     public void shouldGetMessageBackWhenSendMessage() throws IOException, InterruptedException {
 
         final String sentMessage = Thread.currentThread().getName() + ";seed:" + Math.random();
@@ -75,14 +76,6 @@ public class JUnitLoadTest {
     @After
     public void setDown() throws ServerError {
         server.stop();
-    }
-
-    // TODO: sleep should be moved to test utils
-    private static void sleep(int seconds) {
-        try {
-            Thread.sleep(1000 * seconds);
-        } catch (InterruptedException e) {
-        }
     }
 
     private static void socketWrite(BufferedWriter socketWriter, String text) throws IOException {

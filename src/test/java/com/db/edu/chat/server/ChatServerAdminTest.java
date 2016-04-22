@@ -14,7 +14,7 @@ import static com.db.edu.chat.server.TestUtils.sleep;
 public class ChatServerAdminTest {
 	private Server testServer;
 	
-	@Test(timeout=3000)
+	@Test(timeout=5000)
 	public void shouldListenPortWhenStarted() throws ServerError, IOException {
 		testServer = new Server();
 		testServer.start();
@@ -27,7 +27,7 @@ public class ChatServerAdminTest {
 		}
 	}
 
-	@Test(expected=ConnectException.class, timeout=3000)
+	@Test(expected=ConnectException.class, timeout=5000)
 	public void shouldReleasePortWhenStopped() throws ServerError, IOException {
 		testServer = new Server();
 		testServer.start();
