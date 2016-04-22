@@ -25,23 +25,26 @@ public class Server {
     private volatile boolean stopFlag;
 
     // TODO: move to start method
-    private Thread connectionEventLoop = new Thread() {
+    private Thread connectionEventLoop = new Thread(new ConnectionLoop());
+
+    //endregion
+
+    private class ConnectionLoop implements Runnable {
         @Override
         public void run() {
-            while (!isInterrupted()) {
+            while (!Thread.interrupted()) {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     logger.info("Client connected: " + clientSocket.getInetAddress() + ":" + clientSocket.getPort());
                     Connection clientConn = new Connection(clientSocket);
                     connections.add(clientConn);
 
-//					Thread clientConnectionHandler = new Thread(new ClientConnectionHandler(clientSocket, clientsSockets));
                     Thread clientListener = new Thread(new Listener(new BufferedReader(new InputStreamReader(clientSocket.getInputStream())),
-                            new SocketWriterProcessor(connections,clientConn)));
+                            new SocketWriterProcessor(connections, clientConn)));
                     clientListener.setDaemon(true);
                     clientListener.start();
                 } catch (SocketException e) {
-                    logger.debug("Intentionally closed socket: time to stop",e);
+                    logger.debug("Intentionally closed socket: time to stop", e);
                     break;
                 } catch (IOException e) {
                     logger.error("Network error", e);
@@ -49,8 +52,7 @@ public class Server {
                 }
             }
         }
-    };
-    //endregion
+    }
 
     public void start() throws ServerError {
         try {
