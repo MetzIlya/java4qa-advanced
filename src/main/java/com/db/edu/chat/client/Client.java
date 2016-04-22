@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class Client {
+	private Client(){}
 	public static void main(String... args) throws IOException {
 
 		final Socket socket = new Socket(Configuration.HOST, Configuration.PORT);
