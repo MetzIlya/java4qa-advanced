@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.SocketException;
 
 public class Listener implements Runnable {
     BufferedReader reader;
@@ -27,7 +28,10 @@ public class Listener implements Runnable {
                 if(message == null) break;
 
                 processor.processMessage(message);
-            } catch (IOException e) {
+            } catch (SocketException e) {
+                logger.error("Socket exception ",e.getLocalizedMessage());
+                break;
+            }catch (IOException e) {
                 logger.error("Error while reading line ",e);
                 break;
             } catch (MessageProcessException e) {

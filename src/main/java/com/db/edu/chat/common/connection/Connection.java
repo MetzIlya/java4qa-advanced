@@ -11,9 +11,6 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.SocketException;
 
-/**
- * Created by Student on 22.04.2016.
- */
 public class Connection {
     private Socket ownSocket;
     private BufferedWriter writer;

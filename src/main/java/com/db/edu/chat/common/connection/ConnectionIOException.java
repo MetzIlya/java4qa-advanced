@@ -2,9 +2,6 @@ package com.db.edu.chat.common.connection;
 
 import java.io.IOException;
 
-/**
- * Created by Student on 27.04.2016.
- */
 public class ConnectionIOException extends IOException {
     public ConnectionIOException() {
     }
