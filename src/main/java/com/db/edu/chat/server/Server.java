@@ -1,9 +1,9 @@
 package com.db.edu.chat.server;
 
 import com.db.edu.chat.Configuration;
-import com.db.edu.chat.common.Connection;
+import com.db.edu.chat.common.connection.Connection;
 import com.db.edu.chat.common.Listener;
-import com.db.edu.chat.common.SocketWriterProcessor;
+import com.db.edu.chat.common.processors.SocketWriterProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

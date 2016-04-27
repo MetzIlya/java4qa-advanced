@@ -1,4 +1,4 @@
-package com.db.edu.chat.common;
+package com.db.edu.chat.common.connection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * Created by Student on 22.04.2016.
@@ -27,24 +28,25 @@ public class Connection {
         return this.ownSocket==connection.getOwnSocket();
     }
 
-    public Connection(Socket socket) {
+    public Connection(Socket socket) throws ConnectionInitializeException {
         this.ownSocket = socket;
         try {
             writer=new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             reader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (IOException e) {
             logger.error("Socket opening exception ",e);
+            throw new ConnectionInitializeException("Socket opening exception ",e);
         }
     }
-    public String read(){
+    public String read() throws ConnectionIOException{
         try {
             return reader.readLine();
         } catch (IOException e) {
             logger.error("Read exception ",e);
-            return null;
+            throw new ConnectionIOException("Read exception ",e);
         }
     }
-    public void write(String message){
+    public void write(String message)throws ConnectionIOException, SocketException{
         if (ownSocket.isClosed()) return;
         if (!ownSocket.isBound()) return;
         if (!ownSocket.isConnected()) return;
@@ -53,8 +55,11 @@ public class Connection {
             writer.write(message);
             writer.newLine();
             writer.flush();
-        } catch (IOException e) {
+        } catch (SocketException e){
+            throw e;
+        }catch (IOException e) {
             logger.error("Write exception ",e);
+            throw new ConnectionIOException("Write exception ",e);
         }
 
     }

@@ -1,8 +1,11 @@
-package com.db.edu.chat.common;
+package com.db.edu.chat.common.processors;
 
+import com.db.edu.chat.common.connection.Connection;
+import com.db.edu.chat.common.connection.ConnectionIOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.SocketException;
 import java.util.Collection;
 
 public class SocketWriterProcessor implements MessageProcessor{
@@ -16,11 +19,17 @@ public class SocketWriterProcessor implements MessageProcessor{
     }
 
     @Override
-    public void processMessage(String message) {
+    public void processMessage(String message) throws MessageProcessException {
         logger.debug("Processing {} to a collection of Connections {}",message,connections);
         for (Connection connection : connections) {
                 if(!own.isOwn(connection)) {
-                    connection.write(message);
+                    try {
+                        connection.write(message);
+                    } catch (SocketException e){
+                        connections.remove(connection);
+                    } catch(ConnectionIOException e) {
+                        throw new MessageProcessException(e);
+                    }
                 }
         }
 

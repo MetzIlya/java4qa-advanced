@@ -1,4 +1,4 @@
-package com.db.edu.chat.common;
+package com.db.edu.chat.common.processors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +15,14 @@ public class WriterProcessor implements MessageProcessor {
     }
 
     @Override
-    public void processMessage(String message) {
+    public void processMessage(String message) throws MessageProcessException {
         try {
             writer.write(message);
             writer.newLine();
             writer.flush();
         } catch (IOException e) {
             logger.error("IO Exception",e);
+            throw new MessageProcessException("IO Exception",e);
         }
 
     }

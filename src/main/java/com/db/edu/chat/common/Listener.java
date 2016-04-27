@@ -1,5 +1,7 @@
 package com.db.edu.chat.common;
 
+import com.db.edu.chat.common.processors.MessageProcessException;
+import com.db.edu.chat.common.processors.MessageProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +28,10 @@ public class Listener implements Runnable {
 
                 processor.processMessage(message);
             } catch (IOException e) {
-                logger.error("",e);
+                logger.error("Error while reading line ",e);
                 break;
+            } catch (MessageProcessException e) {
+                logger.info("",e);
             }
         }
 
